@@ -6,15 +6,15 @@ from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import LSTM, Dense, BatchNormalization, Dropout
 import math
+import os
 
-def get_input():
+def get_input(inp):
     try:
-        ticker = input("Please enter a ticker symbol: ")
-        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey=Y8ZR7HEZ95DQQ9QH"
+        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={inp}&outputsize=full&apikey=Y8ZR7HEZ95DQQ9QH"
         r = requests.get(url)
         d = r.json()
         d1 = d['Time Series (Daily)']
-        return ticker, d1
+        return inp, d1
     except:
         print("Ticker not valid")
 
@@ -60,6 +60,19 @@ def inverse_predict(model,last60,max,min):
   prices_log = math.e ** (prices_scale) - 1 #inverse log transform
   prices = np.append(prices_log,prediction)
   return prediction, prices
+
+def save_fig(prices,tickersymbol):
+    plt.figure(figsize=(10,6))
+    plt.plot(range(61), prices, linestyle='-', marker='o', color='red', label='Predicted Data')
+    plt.plot(range(60), prices[:60], linestyle='-', marker='o', color='blue', label='Actual Data')
+    plt.title(f"{tickersymbol} Stock Price: Last 60 Days and Next Day Predicted")
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.legend()
+    filename = f"{tickersymbol}_stock_price.jpeg"
+    save_path = os.path.join('static', filename)
+    plt.savefig(save_path)
+    plt.close()
 
 
 
