@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+<body>
+	<h3>Stock Price Prediction</h3>
+
+<div>
+<form action="{{ url_for('predict')}}"method="post"> <!-- replace 'predict' with the function you want to retrive data from form in app.py -->
+	<label for="ticker">Ticker</label>
+	<select id="ticker" name="ticker">
+	<option value="0">VOO</option>
+	<option value="1">IBM</option>
+	<option value="2">TSLA</option>
+	</select>
+	<br>
+	<br>
+	<label for="date">Date</label>
+	<input type="text" id="date" name="date">
+	<br>
+	<br>
+	<br>
+	<input type="submit" value="Submit">
+</form>
+	<br>
+	<br>
+	{{ result }} <!-- replace result with the variable you want to be displayed, retrieved from predict() function specified at start of form -->
+</div>
+</body>
+</html>
