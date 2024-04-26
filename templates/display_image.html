@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Plot Image</title>
+</head>
+<body>
+<br><br>
+<h1>{{ result }}</h1>
+    <br>
+    <img src="{{ url_for('static', filename=image_file) }}" alt="Generated Plot">
+    <!-- Display the image using the URL passed from the Flask route -->
+</body>
+</html>
+
